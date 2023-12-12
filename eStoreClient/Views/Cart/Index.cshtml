@@ -1,0 +1,80 @@
+﻿@using System.Globalization;
+@model IEnumerable<Repositories.Entities.OrderDetail>
+
+@{
+    ViewData["Title"] = "Cart";
+    float totalPrice = 0;
+}
+
+<div class="container">
+    <h1 class="text-center">Your Shopping Cart</h1>
+    @if (ViewBag.ErrMsg != null)
+    {
+        <div class="alert alert-danger">@ViewBag.ErrMsg</div>
+    }
+    <table class="table table-bordered">
+        <colgroup>
+            <col style="width: 5%;" />
+            <col style="width: 30%;" /> <!-- 30% width for the first column -->
+            <col style="width: 20%;" /> <!-- 20% width for the second column -->
+            <col style="width: 15%;" /> <!-- 15% width for the third column -->
+            <col style="width: 15%;" /> <!-- 20% width for the fourth column -->
+            <col style="width: 15%;" /> <!-- 15% width for the fifth column -->
+        </colgroup>
+        <thead class="thead-dark">
+            <tr>
+                <td style="width: 5%;">
+                    <strong>Item No</strong>
+                </td>
+                <th>Product Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var i = 1;
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@Html.DisplayFor(modelItem => item.Product.ProductName)</td>
+                    <td>@item.UnitPrice.ToString("C0", new CultureInfo("vi-VN"))</td>
+                    <td style="display:flex; align-items: center;">
+                        <span style="flex: 1;">
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </span>
+                        <div>
+                            <a asp-action="AddCart" asp-route-id="@item.ProductId" class="btn btn-sm btn-primary">+</a>
+                            <a asp-action="RemoveCart" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger">-</a>
+                        </div>
+                    </td>
+                    @{
+                        var x = (float)(item.Quantity * item.UnitPrice) - (float)(item.Quantity * item.UnitPrice) * item.Discount / 100;
+                    }
+                    <td>@x.ToString("C0", new CultureInfo("vi-VN"))</td>
+                    <td>
+                        <a asp-action="RemoveProduct" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger">Remove This Product</a>
+                    </td>
+                </tr>
+                //totalPrice += x;
+                i++;
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Total Price: </td>
+                <td><h6>@totalPrice.ToString("C0", new CultureInfo("vi-VN"))</h6></td>
+                <td>
+                    @if (Model.Count() > 0)
+                    {
+                        <a asp-action="BuyCart" class="btn btn-success text-white">Buy</a>
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

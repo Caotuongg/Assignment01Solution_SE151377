@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Repositories.Entities.Member>
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+@{
+    ViewData["Tilte"] = "Index";
+}
+<h1>Index</h1>
+
+<div class="container">
+    <h1 class="text-center">Member List</h1>
+
+    @if (ViewBag.ErrMsg != null)
+    {
+        <div class="alert alert-danger">@ViewBag.ErrMsg</div>
+    }
+
+    <hr />
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.MemberId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CompanyName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Country)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MemberId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Country)
+                    </td>
+                    <td>
+
+                            <a asp-action="EditMember" asp-route-id="@item.MemberId">Edit</a>
+                            <a asp-action="DetailsMember" asp-route-id="@item.MemberId">Details</a>
+                            <a asp-action = "DeleteMember" asp-route-id ="@item.MemberId">Delete</a>
+                        
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+
+
+    </table>

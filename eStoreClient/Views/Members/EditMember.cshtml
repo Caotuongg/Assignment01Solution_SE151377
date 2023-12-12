@@ -1,0 +1,57 @@
+﻿@model Repositories.Entities.Member
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+@{
+    ViewData["Title"] = "Edit Member";
+}
+
+<div class="container">
+    <h1 class="text-center">Edit Member</h1>
+
+    @if (ViewBag.ErrMsg != null)
+    {
+        <div class="alert alert-danger">@ViewBag.ErrMsg</div>
+    }
+
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="EditMember" method="post" class="needs-validation" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input type="hidden" asp-for="MemberId" />
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input name="Email" id="email" class="form-control" value="@Model.Email" readonly required />
+                </div>
+
+                <div class="form-group">
+                    <label for="companyName">Company Name</label>
+                    <input name="CompanyName" id="companyName" class="form-control" value="@Model.CompanyName" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input name="City" id="city" class="form-control" value="@Model.City" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <input name="Country" id="country" class="form-control" value="@Model.Country" required />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary btn-block" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
